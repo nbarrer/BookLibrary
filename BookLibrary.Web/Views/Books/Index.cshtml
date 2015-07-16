@@ -1,0 +1,46 @@
+﻿@model IEnumerable<BookLibrary.DAL.Models.Book>
+
+@{
+    ViewBag.Title = "Books Administration";
+}
+
+<h2>Books Administration</h2>
+
+<p>
+    @Html.ActionLink("+ Create New Book", "Create", null, new { @class = "btn btn-default" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Book Name
+        </th>
+        <th>
+            Category
+        </th>
+        <th>
+            Author
+        </th>
+        <th>Operations</th>
+    </tr>
+
+@foreach (var item in Model.Select((value, i) => new { Data = value, Index = i }))
+{
+    <tr class=@(item.Index % 2 == 0 ? "even" : "odd")>
+        <td>
+            @Html.DisplayFor(modelItem => item.Data.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Data.Category.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Data.Author.Fullname)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Data.Id }, new { @class = "edit", title = "Edit Book" }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Data.Id }, new { @class = "details", title = "Book Details" }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Data.Id }, new { @class = "delete", title = "Delete Book" })
+        </td>
+    </tr>
+}
+
+</table>

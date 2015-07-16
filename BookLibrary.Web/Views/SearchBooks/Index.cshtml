@@ -1,0 +1,68 @@
+﻿@model IEnumerable<BookLibrary.DAL.Models.Book>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<div style='font-family:Arial'>
+    @using (Html.BeginForm("Find", "SearchBooks", FormMethod.Post))
+    {
+        <div >
+            <b>Search by:   </b>
+            @Html.TextBox("query", ViewBag.CurrentFilter as string)
+            <br />
+
+            @Html.RadioButton("searchBy", "Author", true)<text>Author</text>
+            
+            @if (ViewBag.SearchBy == "Category")
+            {
+                @Html.RadioButton("searchBy", "Category", true)<text>Category</text>
+            }
+            else
+            {
+                @Html.RadioButton("searchBy", "Category")<text>Category</text>
+            }
+        </div>
+        <br />
+        <div >
+            <input type="submit" value="Find" class="btn btn-default" />
+        </div>
+        <br />
+    }
+
+</div>
+@if(Model != null)
+{ 
+<table class="table">
+    <tr>
+        <th>
+            Book Name
+        </th>
+        <th>
+            Category
+        </th>
+        <th>
+            Author Name
+        </th>        
+    </tr>
+
+@foreach (var item in Model.Select((value, i) => new { Data = value, Index = i }))
+{
+    <tr class=@(item.Index % 2 == 0 ? "even" : "odd")>
+        <td>
+            @Html.DisplayFor(modelItem => item.Data.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Data.Category.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Data.Author.Fullname)
+        </td>
+    </tr>
+}
+
+</table>
+}
+

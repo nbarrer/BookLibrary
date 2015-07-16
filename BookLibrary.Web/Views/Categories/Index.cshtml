@@ -1,0 +1,34 @@
+﻿@model IEnumerable<BookLibrary.DAL.Models.Category>
+
+@{
+    ViewBag.Title = "Categories Administration";
+}
+
+<h2>Categories Administration</h2>
+
+<p>
+    @Html.ActionLink("+ Create New Category", "Create", null, new { @class = "btn btn-default" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>Operations</th>
+    </tr>
+
+@foreach (var item in Model.Select((value, i) => new { Data = value, Index = i }))
+{
+    <tr class=@(item.Index % 2 == 0 ? "even" : "odd")>
+        <td>
+            @Html.DisplayFor(modelItem => item.Data.Name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Data.Id }, new { @class = "edit", title = "Edit Category" }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Data.Id }, new { @class = "details", title = "Category Details" }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Data.Id }, new { @class = "delete", title = "Delete CAtegory" })
+        </td>
+    </tr>
+}
+
+</table>
